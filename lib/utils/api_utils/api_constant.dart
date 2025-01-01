@@ -1,5 +1,5 @@
 class ApiConstant {
-  static const String baseUrl = "https://drmosalah.safehandapps.com/api/v1/";
+  static const String baseUrl = "https://test-eight-nu-20.vercel.app/api/v1/";
 
   ///SignIn Api
   static const String signInAdmin = "admin/signin_admin";

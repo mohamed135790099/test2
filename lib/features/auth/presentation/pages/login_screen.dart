@@ -117,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               );
 
                               if (isSignedIn) {
-                                await ReservationCubit.get(context).getAllReservations();
+                                // await ReservationCubit.get(context).getAllReservations();
                                 await ReservationCubit.get(context).getAllUsers();
                                 AppCubit.get(context).currentIndex == 5;
                               }

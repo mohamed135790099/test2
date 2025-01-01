@@ -1014,9 +1014,17 @@ class ReservationsRepo {
     }
   }
 
-  Future<Either<dynamic, Failure>> getAllReservations() async {
+  Future<Either<dynamic, Failure>> getAllReservations({
+    String? date,
+    String? status
+}) async {
     try {
-      ResponseModel response = await DioHelper.get(endPoint: ApiConstant.getAllReservations,);
+      ResponseModel response = await DioHelper.get(endPoint: ApiConstant.getAllReservations,
+      query: {
+        'date' : date,
+        'status' : status
+      }
+      );
       return Left(response.data);
     } on ResponseModel catch (responseModel) {
       return Left(responseModel);
@@ -1024,6 +1032,24 @@ class ReservationsRepo {
       return Right(failure);
     }
   }
+
+  Future<Either<dynamic, Failure>> getReservationsByDateOnly({
+    String? date,
+  }) async {
+    try {
+      ResponseModel response = await DioHelper.get(endPoint: ApiConstant.getAllReservations,
+          query: {
+            'date' : date,
+          }
+      );
+      return Left(response.data);
+    } on ResponseModel catch (responseModel) {
+      return Left(responseModel);
+    } on Failure catch (failure) {
+      return Right(failure);
+    }
+  }
+
 
 
 

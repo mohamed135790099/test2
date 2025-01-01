@@ -34,7 +34,7 @@ class _ReservationsScreenState extends State<ReservationsScreen> {
     final completer = Completer<void>();
     Timer(const Duration(milliseconds: 500), completer.complete);
 
-    ReservationCubit.get(context).fetchReservations(formattedDate.toString(),"pending");
+ //   ReservationCubit.get(context).fetchReservations(formattedDate.toString(),"pending");
 
     return completer.future.then<void>((_) {
       ScaffoldMessenger.of(_scaffoldKey.currentState!.context).showSnackBar(
@@ -51,7 +51,7 @@ class _ReservationsScreenState extends State<ReservationsScreen> {
     });
   }
 
-  _bind()async{
+  Future _bind()async{
     final currentDateTime = await _worldTimeService.getCurrentDateTime();
     if (currentDateTime != null) {
       formattedDate = DateFormat('yyyy-MM-dd').format(currentDateTime);
@@ -63,8 +63,13 @@ class _ReservationsScreenState extends State<ReservationsScreen> {
   @override
   void initState() {
     super.initState();
-    _bind();
-    ReservationCubit.get(context).getAllReservations();
+    _bind().then((value) {
+      ReservationCubit.get(context).getAllReservations(
+          date: formattedDate.toString(),
+          status: 'pending'
+      );
+    },);
+
   }
 
   @override
@@ -83,7 +88,7 @@ class _ReservationsScreenState extends State<ReservationsScreen> {
                   children: [
                     const DateTimeline(),
                     12.hs,
-                    const ReservationToggleByDate()
+                     const ReservationToggleByDate()
                   ],
                 ),
               ),

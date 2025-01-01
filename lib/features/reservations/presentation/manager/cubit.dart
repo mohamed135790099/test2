@@ -729,10 +729,16 @@ class ReservationCubit extends Cubit<ReservationState> {
 
   List<GetAllReservations> allReservations = [];
 
-  Future<void> getAllReservations() async {
+  Future<void> getAllReservations({
+    String? date,
+    String? status
+}) async {
     emit(GetAllReservationsLoading());
 
-    final result = await _reservationsRepo.getAllReservations();
+    final result = await _reservationsRepo.getAllReservations(
+     date:  date,
+      status: status
+    );
     result.fold(
       (l) async {
         final allReservation = l["reservations"];
@@ -791,7 +797,11 @@ class ReservationCubit extends Cubit<ReservationState> {
 
   Future<void> getReservationsByDate(DateTime date) async {
     emit(GetReservationsByDateLoading());
-    final result = await _reservationsRepo.getAllReservations();
+    DateFormat dateFormat = DateFormat('yyyy-MM-dd', 'en');
+    print(dateFormat.format(date));
+    final result = await _reservationsRepo.getReservationsByDateOnly(
+      date: dateFormat.format(date),
+    );
     result.fold(
       (l) async {
         final allReservation = l["reservations"];
