@@ -27,7 +27,9 @@ class _PatientDropDownSearchState extends State<PatientDropDownSearch> {
           validator: (value) =>
               value?.fullName?.isEmpty ?? false ? 'field required' : null,
           items: patientNames,
-          onChanged: reservationCubit.setPickModel,
+          onChanged: (value) {
+            reservationCubit.setPickModelForId(value);
+          },
           selectedItem: null,
           popupProps:
               const PopupProps.menu(fit: FlexFit.loose, showSearchBox: true),
